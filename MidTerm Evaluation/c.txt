@@ -1,1 +1,214 @@
+*Problems from MidTerm Eval*
 
+Problem 1 : 
+
+class Solution {
+
+int n ;
+
+vector<int>dp ;
+
+int STONE(vector<int>& stoneValue, int cur)
+
+{
+
+if (cur == n)
+
+{
+
+return 0;
+
+}
+
+if (dp[cur] > INT_MIN)
+
+{
+
+return dp[cur];
+
+}
+
+int sum = 0 ;
+
+for(int i = cur; (i < cur + 3) && (i < n ); i++)
+
+{
+
+sum += stoneValue[i] ;
+
+dp[cur] = max(dp[cur], sum - STONE(stoneValue, i+1)) ;
+
+}
+
+return dp[cur] ;
+
+}
+
+public:
+
+string stoneGameIII(vector<int>& stoneValue)
+
+{
+
+n = (int)stoneValue.size() ;
+
+dp.resize(n, INT_MIN) ;
+
+int score = STONE(stoneValue, 0 ) ;
+
+if (score > 0)
+
+{
+
+return "Alice";
+
+}
+
+else if (score < 0)
+
+{
+
+return "Bob";
+
+}
+
+else
+
+{
+
+return "Tie";
+
+}
+
+}
+
+};
+
+
+Problem 3:
+
+class Solution {
+
+public:
+
+vector<vector<int>> adj;
+
+long long dfs(int node,int parent,vector<int>& values){
+
+if(adj[node].size()==1 && node!=0)
+
+return values[node];
+
+long long sum = 0;
+
+for(auto it : adj[node]){
+
+if(it==parent)
+
+continue;
+
+sum += dfs(it,node,values);
+
+}
+
+return min(sum,1LL*values[node]);
+
+}
+
+long long maximumScoreAfterOperations(vector<vector<int>>& edges, vector<int>& values) {
+
+int n = values.size();
+
+adj.resize(n);
+
+for(auto it : edges){
+
+adj[it[0]].push_back(it[1]);
+
+adj[it[1]].push_back(it[0]);
+
+}
+
+long long ans = 0;
+
+for(int i=0;i<n;i++)
+
+ans += values[i];
+
+long long x = dfs(0,-1,values);
+
+return ans-x;
+
+}
+
+};
+
+Problem 2:
+
+class Solution {
+
+public:
+
+vector<vector<int>> verticalTraversal(TreeNode* root) {
+
+vector<vector<int>> ans;
+
+queue<pair<TreeNode*, pair<int, int>>>q; // Node , {row, col};
+
+q.push({root,{0,0}});
+
+map<int, map<int, multiset<int>>>mp; 
+
+while(!q.empty()){
+
+auto front = q.front();
+
+q.pop();
+
+TreeNode* &node = front.first;
+
+auto coordinate = front.second;
+
+auto &row = coordinate.first;
+
+auto &col = coordinate.second;
+
+mp[col][row].insert(node -> val);
+
+if(node -> left){
+
+q.push({{node -> left},{row + 1, col - 1}});
+
+}
+
+if(node -> right){
+
+q.push({{node -> right},{row + 1, col + 1}});
+
+}
+
+}
+
+for(auto i:mp){
+
+auto &colmp = i.second;
+
+vector<int> verticalLine;
+
+for(auto colmpi : colmp){
+
+auto &mset = colmpi.second;
+
+verticalLine.insert(verticalLine.end(), mset.begin(), mset.end());
+
+}
+
+ans.push_back(verticalLine);
+
+}
+
+return ans;
+
+}
+
+};
