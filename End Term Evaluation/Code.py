@@ -11,18 +11,18 @@ mole_frac = np.zeros((steps + 1, 3))
 vol_prod = np.zeros((steps, 3))
 mole_frac[0] = np.array([0.85, 0.12, 0.03])
 
-for step in range(1, steps + 1)
-    molecules = total_molecules  mole_frac[step - 1]
+for step in range(1, steps + 1):
+    molecules = total_molecules * mole_frac[step - 1]
     
-    for _ in range(iterations)
-        for component in range(3)
-            vol_prod[step - 1, component] = volume[component]  molecules[component]
+    for _ in range(iterations):
+        for component in range(3):
+            vol_prod[step - 1, component] = volume[component] * molecules[component]
         
         max_product = np.max(vol_prod[step - 1])
-        ratio = vol_prod[step - 1]  max_product
+        ratio = vol_prod[step - 1] * max_product
         
         random = np.random.random()  #random float between 0 and 1
-        molecules = np.where(ratio  random, molecules - 1, molecules)
+        molecules = np.where(ratio > random, molecules - 1, molecules)
     
     mole_frac[step] = molecules  np.sum(molecules)
 
