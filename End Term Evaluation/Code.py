@@ -28,7 +28,7 @@ for step in range(1, steps + 1):
 
 # Plotting the ternary diagram
 plt.figure(figsize=(8, 6))
-plt.scatter(mole_frac[, 0], mole_frac[, 1], c=mole_frac[, 2], cmap='viridis', s=0.5)
+plt.scatter(mole_frac[:, 0], mole_frac[:, 1], c=mole_frac[:, 2], cmap='viridis', s=0.5)
 plt.colorbar(label='Cumene Mole Fraction')
 plt.xlabel('Benzene Mole Fraction')
 plt.ylabel('Toluene Mole Fraction')
@@ -38,9 +38,9 @@ plt.show()
 
 # Plotting the mole fraction changes over steps
 plt.figure(figsize=(8, 6))
-plt.plot(range(steps + 1), mole_frac[, 0], label='Benzene')
-plt.plot(range(steps + 1), mole_frac[, 1], label='Toluene')
-plt.plot(range(steps + 1), mole_frac[, 2], label='Cumene')
+plt.plot(range(steps + 1), mole_frac[:, 0], label='Benzene')
+plt.plot(range(steps + 1), mole_frac[:, 1], label='Toluene')
+plt.plot(range(steps + 1), mole_frac[:, 2], label='Cumene')
 plt.xlabel('Simulation Steps')
 plt.ylabel('Mole Fraction')
 plt.title('Evolution of Mole Fractions Over Time')
